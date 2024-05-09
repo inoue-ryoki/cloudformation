@@ -69,3 +69,33 @@ CloudFormationとはAWSが提供している、インフラをコードで定義
 
 - AWS CLIをインストール
 - .ssh/config等を編集してAWSにログインできるように
+
+
+# AWS CLIをインストール
+
+linuxの環境なら以下のコマンド
+
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+```
+
+# .ssh/config等を編集してAWSにログインできるように
+
+※sudoの方にはidentityfileが必要。シークレットマネージャーの中に入っているのでそれをコピーしてsecretディレクトリの中に格納しておく。
+※--targetの後ろはec2インスタンスのidを入れる。 AWSのコンソールからEC2→インスタンスで確認できる
+
+```
+# Taxi Form
+host taxi-form-stg-sudo
+  user ubuntu
+  identityfile ~/secret/taxicc202304-stg.pem
+  proxycommand aws ssm start-session --target [ec2インスタンスのid] --document-name AWS-StartSSHSession
+  serveraliveinterval 15
+host taxi-form-stg
+  user u
+  proxycommand aws ssm start-session --target [ec2インスタンスのid] --document-name AWS-StartSSHSession
+  serveraliveinterval 15
+```
