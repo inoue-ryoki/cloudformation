@@ -99,3 +99,10 @@ host taxi-form-stg
   proxycommand aws ssm start-session --target [ec2インスタンスのid] --document-name AWS-StartSSHSession
   serveraliveinterval 15
 ```
+
+# templete.ymlの中にCloudFormationのコードを書いていく（ここから本題）
+
+準備ができたのでコードを書いていく。
+
+リファレンス
+https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/template-anatomy.html
